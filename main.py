@@ -4,24 +4,16 @@ from sqlalchemy import create_engine
 
 from src.config.settings import Settings
 from src.api.api_reponse import API
+from src.endpoints.endpoint import Endpoints
 
 settings = Settings()
+
+endpoints = Endpoints()
+endpoints = endpoints.get_all()
 
 base_url = settings.BASE_URL
 app_key = settings.APP_KEY
 app_secret = settings.APP_SECRET
-
-endpoints = [
-    {
-        'resources': 'geral/clientes/',
-        'action': 'ListarClientes',
-        'params': {
-            'pagina': 1,
-            "registros_por_pagina": 100,
-            "apenas_importado_api": "N"
-        }
-    }
-]
 
 HEADERS = {
     'Content-Type': 'application/json' 
@@ -95,6 +87,7 @@ for endpoint in endpoints:
     resource = endpoint.get('resources', None)
     action = endpoint.get('action', None)
     params = endpoint.get('params', None)
+    data_source = endpoint.get('data_source', None)
 
     total_of_pages = get_total_of_pages(resource, action, params)
 
@@ -112,7 +105,7 @@ for endpoint in endpoints:
         response = request(resource, body, params)
         records_fetched += response.get('registros', 0)
 
-        contents = response.get('clientes_cadastro', [])
+        contents = response.get(data_source, [])
 
         black_list = ['tags', 'recomendacoes', 'homepage', 'fax_ddd', 'fax_numero', 'bloquear_exclusao', 'produtor_rural']
 
