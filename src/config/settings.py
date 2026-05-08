@@ -6,6 +6,12 @@ class Settings(BaseSettings):
     APP_KEY: str
     APP_SECRET: str
     BASE_URL: str
+    
+    DB_USER: str
+    DB_PASS: str
+    DB_HOST: str
+    DB_PORT: int
+    DB_NAME: str
 
     model_config = SettingsConfigDict(
         env_file='.env',
