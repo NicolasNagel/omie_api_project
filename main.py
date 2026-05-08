@@ -1,9 +1,9 @@
 import pandas as pd
-import requests
 
 from sqlalchemy import create_engine
 
 from src.config.settings import Settings
+from src.api.api_reponse import API
 
 settings = Settings()
 
@@ -27,7 +27,7 @@ HEADERS = {
     'Content-Type': 'application/json' 
 }
 
-def request(resource: str, body: dict) -> dict:
+def request(resource: str, body: dict, params: dict) -> dict:
     """Faz uma requisição POST para o endpoint especificado e retorna a resposta em formato JSON.
     
     Args:
@@ -38,11 +38,12 @@ def request(resource: str, body: dict) -> dict:
     Returns:
         dict: A resposta da requisição em formato JSON.
     """
-    response = requests.post(
+    response = API(
         url=f'{base_url}/{resource}',
         headers=HEADERS,
-        json=body
-    )
+        json=body,
+        params=params
+    ).post()
 
     if response.status_code == 200:
         json = response.json()
@@ -69,7 +70,7 @@ def get_total_of_pages(resource: str, action: str, params: dict) -> int:
         'param': [params]
     }
     
-    response = request(resource, payload)
+    response = request(resource, payload, params)
     total_of_pages = response.get('total_de_paginas', 0)
     records = response.get('total_de_registros', 0)
     print(f'Total of Pages: {total_of_pages}')
@@ -108,7 +109,7 @@ for endpoint in endpoints:
             'param': [params]
         }
 
-        response = request(resource, body)
+        response = request(resource, body, params)
         records_fetched += response.get('registros', 0)
 
         contents = response.get('clientes_cadastro', [])
