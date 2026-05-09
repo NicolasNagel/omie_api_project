@@ -7,7 +7,8 @@
             "registros_por_pagina": 100,
             "apenas_importado_api": "N"
         },
-        "data_source": "clientes_cadastro"
+        "data_source": "clientes_cadastro",
+        "page_label": "pagina"
     },
     {
         "resources": "geral/categorias/",
@@ -17,7 +18,8 @@
             "registros_por_pagina": 100,
             "apenas_importado_api": "N"
         },
-        "data_source": "categorias_cadastro"
+        "data_source": "categoria_cadastro",
+        "page_label": "pagina"
     },
     {
         "resources": "geral/empresas/",
@@ -27,6 +29,64 @@
             "registros_por_pagina": 100,
             "apenas_importado_api": "N"
         },
-        "data_source": "empresas_cadastro"
+        "data_source": "empresas_cadastro",
+        "page_label": "pagina"
+    },
+    {
+        "resources": "geral/departamentos/",
+        "action": "ListarDepartamentos",
+        "params": {
+            "pagina": 1,
+            "registros_por_pagina": 100
+        },
+        "data_source": "departamentos",
+        "page_label": "pagina"
+    },
+    {
+        "resources": "produtos/pedidos/",
+        "action": "ListarPedidos",
+        "params": {
+            "pagina": 1,
+            "registros_por_pagina": 100,
+            "apenas_importado_api": "N"
+        },
+        "data_source": "pedido_venda_produto",
+        "page_label": "pagina"
+    },
+    {
+        "resources": "financas/mf/",
+        "action": "ListarMovimentos",
+        "params": {
+            "nPagina": 1,
+            "nRegPorPagina": 100
+        },
+        "data_source": "movimentos",
+        "page_label": "nPagina",
+        "total_of_pages_label": "nTotPaginas",
+        "records_label": "nRegistros"
+    },
+    {
+        "resources": "geral/contacorrente/",
+        "action": "ListarContasCorrentes",
+        "params": {
+            "pagina": 1,
+            "registros_por_pagina": 100,
+            "apenas_importado_api": "N"
+        },
+        "data_source": "ListarContasCorrentes",
+        "page_label": "pagina"
+    },
+    {
+        "resources": "financas/extrato",
+        "action": "ListarExtrato",
+        "params": {
+            "nCodCC": 0,
+            "cCodIntCC": "",
+            "dPeriodoInicial": "",
+            "dPeriodoFinal": ""
+        },
+        "data_source": "ListarMovimentos",
+        "pagination_type": "date_range",
+        "date_init": "01/01/2024"
     }
 ]

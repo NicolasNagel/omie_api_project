@@ -70,7 +70,17 @@ def get_total_of_pages(resource: str, action: str, params: dict) -> int:
 
     return total_of_pages
 
-def save_into_db(page: int, resource: str, content: dict):
+def save_into_db(page: int, resource: str, content: dict) -> None:
+    """Salva os dados em um banco de dados PostgreSQL usando SQLAlchemy.
+    
+    Args:
+        page (int): O número da página atual.
+        resource (str): O recurso do endpoint
+        content (dict): O conteúdo a ser salvo no banco de dados.
+
+    Returns:
+        None
+    """
     conn_string =  f'postgresql://{settings.DB_USER}:{settings.DB_PASS}@{settings.DB_HOST}:{settings.DB_PORT}/{settings.DB_NAME}'
     table_name = resource.split('/')[-2]
 
