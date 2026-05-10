@@ -100,6 +100,26 @@ class OMIECollector:
 
         return total_of_pages
     
+    def discover_data_source(self, response: Dict[str, Any]) -> str | None:
+        """
+        Descobre automaticamente qual a chave da resposta contém a lista a ser capturada.
+        """
+
+        ignored_keys = {
+            'pagina',
+            'nPagina',
+            'total_de_paginas',
+            'nTotPaginas',
+            'total_de_registros',
+            'nTotRegistros',
+        }
+
+        for key, value in response.items():
+            if key not in ignored_keys and isinstance(value, list):
+                return key
+            
+        return None
+    
     def remove_black_list_fields(self, contents: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """Remove campos indesejados dos registros."""
 
@@ -146,6 +166,16 @@ class OMIECollector:
         )
 
         for page, response in enumerate(responses, start=1):
+            if data_source not in response:
+                discovered = self.discover_data_source(response)
+
+                logger.warning(
+                    f'Data Source: {data_source} não encontrado. '
+                    f'Usando Data Source descoberto automaticamente: {discovered}'
+                )
+                
+                data_source = discovered
+                
             contents = response.get(data_source, [])
 
             contents = self.remove_black_list_fields(contents)

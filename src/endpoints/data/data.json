@@ -1,92 +1,156 @@
 [
-    {
-        "resources": "geral/clientes/",
-        "action": "ListarClientes",
-        "params": {
-            "pagina": 1,
-            "registros_por_pagina": 100,
-            "apenas_importado_api": "N"
-        },
-        "data_source": "clientes_cadastro",
-        "page_label": "pagina"
+  {
+    "resources": "geral/clientes/",
+    "action": "ListarClientes",
+    "params": {
+      "pagina": 1,
+      "registros_por_pagina": 100,
+      "apenas_importado_api": "N"
     },
-    {
-        "resources": "geral/categorias/",
-        "action": "ListarCategorias",
-        "params": {
-            "pagina": 1,
-            "registros_por_pagina": 100,
-            "apenas_importado_api": "N"
-        },
-        "data_source": "categoria_cadastro",
-        "page_label": "pagina"
+    "data_source": "clientes_cadastro",
+    "page_label": "pagina"
+  },
+  {
+    "resources": "geral/cidades/",
+    "action": "PesquisarCidades",
+    "params": {
+      "pagina": 1,
+      "registros_por_pagina": 100
     },
-    {
-        "resources": "geral/empresas/",
-        "action": "ListarEmpresas",
-        "params": {
-            "pagina": 1,
-            "registros_por_pagina": 100,
-            "apenas_importado_api": "N"
-        },
-        "data_source": "empresas_cadastro",
-        "page_label": "pagina"
+    "data_source": "lista_cidades",
+    "page_label": "pagina"
+  },
+  {
+    "resources": "geral/categorias/",
+    "action": "ListarCategorias",
+    "params": {
+      "pagina": 1,
+      "registros_por_pagina": 100,
+      "apenas_importado_api": "N"
     },
-    {
-        "resources": "geral/departamentos/",
-        "action": "ListarDepartamentos",
-        "params": {
-            "pagina": 1,
-            "registros_por_pagina": 100
-        },
-        "data_source": "departamentos",
-        "page_label": "pagina"
+    "data_source": "categoria_cadastro",
+    "page_label": "pagina"
+  },
+  {
+    "resources": "geral/empresas/",
+    "action": "ListarEmpresas",
+    "params": {
+      "pagina": 1,
+      "registros_por_pagina": 100,
+      "apenas_importado_api": "N"
     },
-    {
-        "resources": "produtos/pedidos/",
-        "action": "ListarPedidos",
-        "params": {
-            "pagina": 1,
-            "registros_por_pagina": 100,
-            "apenas_importado_api": "N"
-        },
-        "data_source": "pedido_venda_produto",
-        "page_label": "pagina"
+    "data_source": "empresas_cadastro",
+    "page_label": "pagina"
+  },
+  {
+    "resources": "geral/departamentos/",
+    "action": "ListarDepartamentos",
+    "params": {
+      "pagina": 1,
+      "registros_por_pagina": 100
     },
-    {
-        "resources": "financas/mf/",
-        "action": "ListarMovimentos",
-        "params": {
-            "nPagina": 1,
-            "nRegPorPagina": 100
-        },
-        "data_source": "movimentos",
-        "page_label": "nPagina",
-        "total_of_pages_label": "nTotPaginas",
-        "records_label": "nRegistros"
+    "data_source": "departamentos",
+    "page_label": "pagina"
+  },
+  {
+    "resources": "geral/contacorrente/",
+    "action": "ListarContasCorrentes",
+    "params": {
+      "pagina": 1,
+      "registros_por_pagina": 100,
+      "apenas_importado_api": "N"
     },
-    {
-        "resources": "geral/contacorrente/",
-        "action": "ListarContasCorrentes",
-        "params": {
-            "pagina": 1,
-            "registros_por_pagina": 100,
-            "apenas_importado_api": "N"
-        },
-        "data_source": "ListarContasCorrentes",
-        "page_label": "pagina"
+    "data_source": "ListarContasCorrentes",
+    "page_label": "pagina"
+  },
+  {
+    "resources": "geral/produtos/",
+    "action": "ListarProdutos",
+    "params": {
+      "pagina": 1,
+      "registros_por_pagina": 100,
+      "apenas_importado_api": "N",
+      "filtrar_apenas_omiepdv": "N"
     },
-    {
-        "resources": "financas/extrato",
-        "action": "ListarExtrato",
-        "params": {
-            "nCodCC": 0,
-            "cCodIntCC": "",
-            "dPeriodoInicial": "",
-            "dPeriodoFinal": ""
-        },
-        "data_source": "ListarMovimentos",
-        "pagination_type": "date_range",
-        "date_init": "01/01/2024"
-    }
+    "data_source": "produto_servico_cadastro",
+    "page_label": "pagina"
+  },
+  {
+    "resources": "produtos/pedido/",
+    "action": "ListarPedidos",
+    "params": {
+      "pagina": 1,
+      "registros_por_pagina": 100,
+      "apenas_importado_api": "N"
+    },
+    "data_source": "pedido_venda_produto",
+    "page_label": "pagina"
+  },
+  {
+    "resources": "financas/mf/",
+    "action": "ListarMovimentos",
+    "params": {
+      "nPagina": 1,
+      "nRegPorPagina": 100
+    },
+    "data_source": "movimentos",
+    "page_label": "nPagina",
+    "total_of_pages_label": "nTotPaginas",
+    "records_label": "nRegistros"
+  },
+  {
+    "resources": "financas/contareceber/",
+    "action": "ListarContasReceber",
+    "params": {
+      "pagina": 1,
+      "registros_por_pagina": 100,
+      "apenas_importado_api": "N"
+    },
+    "data_source": "conta_receber_cadastro",
+    "page_label": "pagina"
+  },
+  {
+    "resources": "financas/contapagar/",
+    "action": "ListarContasPagar",
+    "params": {
+      "pagina": 1,
+      "registros_por_pagina": 100,
+      "apenas_importado_api": "N"
+    },
+    "data_source": "conta_pagar_cadastro",
+    "page_label": "pagina"
+  },
+  {
+    "resources": "financas/extrato/",
+    "action": "ListarExtrato",
+    "params": {
+      "nCodCC": 0,
+      "cCodIntCC": "",
+      "dPeriodoInicial": "",
+      "dPeriodoFinal": ""
+    },
+    "data_source": "listaMovimentos",
+    "pagination_type": "date_range",
+    "date_init": "01/01/2024",
+    "date_start_label": "dPeriodoInicial",
+    "date_end_label": "dPeriodoFinal"
+  },
+  {
+    "resources": "geral/dre/",
+    "action": "ListarCadastroDRE",
+    "params": {
+      "apenasContasAtivas": "N"
+    },
+    "data_source": "dreLista"
+  },
+  {
+    "resources": "servicos/nfse/",
+    "action": "ListarNFSEs",
+    "params": {
+      "nPagina": 1,
+      "nRegPorPagina": 100
+    },
+    "data_source": "nfe",
+    "page_label": "nRegistros"
+  }
 ]

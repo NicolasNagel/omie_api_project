@@ -1,5 +1,6 @@
 import pandas as pd
 import logging
+import json
 
 from typing import List, Dict, Any
 from datetime import datetime
@@ -39,9 +40,60 @@ class DataBase:
         table_name = f'bronze_{name}'
 
         return table_name
+
+    def flatten_dict(
+        self,
+        data: Dict[str, Any],
+        parent_key: str = '',
+        sep: str = '_',
+    ) -> Dict[str, Any]:
+        """Achata dicionários aninhados, concatenando as chaves com um separador.
+
+        Args:
+            data (Dict[str, Any]): O dicionário a ser achatado.
+            parent_key (str, optional): A chave pai para concatenar. Defaults to ''.
+            sep (str, optional): O separador para concatenar as chaves. Defaults to '_'.
+
+        Returns:
+            Dict[str, Any]: O dicionário achatado.
+        """
+        items = []
+        for key, value in data.items():
+            new_key = f"{parent_key}{sep}{key}" if parent_key else key
+
+            if isinstance(value, dict):
+
+                items.extend(
+                    self.flatten_dict(
+                        data=value,
+                        parent_key=new_key, 
+                        sep=sep
+                    ).items()
+                )
+
+            elif isinstance(value, list):
+                items.append(
+                    (
+                        new_key,
+                        json.dumps(value, ensure_ascii=False)
+                    )
+                )
+
+            else:
+                items.append((new_key, value))
+
+        return dict(items)
     
     def normalize_column_name(self, column: str) -> str:
-        """Normaliza nomes de colunas para o Banco de Dados."""
+        """
+        Normaliza nomes de colunas para o Banco de Dados.
+        
+        Args:
+            column (str): O nome da coluna a ser normalizada.
+
+        Returns:
+            str: O nome da coluna normalizada.
+        """
 
         return (
             column
@@ -53,6 +105,14 @@ class DataBase:
         )
     
     def get_columns_of_db(self, table_name: str) -> List[str]:
+        """Obtém os nomes das colunas de uma tabela no banco de dados.
+        
+        Args:
+            table_name (str): O nome da tabela.
+        
+        Returns:
+            List[str]: Uma lista com os nomes das colunas da tabela.
+        """
         connection = self.engine.connect()
 
         query = text(f"""
@@ -63,7 +123,17 @@ class DataBase:
         result = connection.execute(query)
         return [row[0] for row in result]
     
-    def update_table_structure(self, table_name: str, df_columns):
+    def update_table_structure(self, table_name: str, df_columns: List[str]) -> None:
+        """
+        Atualiza a estrutura da tabela no banco de dados.
+
+        Args:
+            table_name (str): O nome da tabela a ser atualizada.
+            df_columns (List[str]): A lista de colunas presentes no DataFrame.
+
+        Returns:
+            None
+        """
         existing_columns = self.get_columns_of_db(table_name)
 
         missing_columns = [col for col in df_columns if col not in existing_columns]
@@ -90,10 +160,20 @@ class DataBase:
         Returns:
             None
         """
+        flatten_data = [
+            self.flatten_dict(record) for record in data
+        ]
 
-        df = pd.json_normalize(data)
+        df = pd.json_normalize(flatten_data)
         df['sistem_source'] = 'OMIE_API'
         df['inserted_at'] = datetime.now()
+
+        for col in df.columns:
+            df[col] = df[col].apply(
+                lambda x: json.dumps(x, ensure_ascii=False)
+                if isinstance(x, (dict, list))
+                else x
+            )
         
         df.columns = [
             self.normalize_column_name(col)

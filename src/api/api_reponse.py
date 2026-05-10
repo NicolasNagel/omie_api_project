@@ -13,6 +13,9 @@ logger = logging.getLogger(__name__)
 class APISession:
     """
     Classe para gerenciar sessões de requisições HTTP com suporte a retries e tratamento de erros.
+
+    Atributtes:
+        session (Session): A sessão de requisições HTTP.
     """
     def __init__(self) -> None:
         self.session = Session()

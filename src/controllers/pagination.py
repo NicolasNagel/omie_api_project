@@ -64,7 +64,7 @@ class PaginationController:
                 )
             case 'date_range':
                 yield from self.date_range(
-                    request_funciontion=request_function,
+                    request_function=request_function,
                     resource=resource,
                     action=action,
                     params=params,
